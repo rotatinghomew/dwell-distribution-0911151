@@ -1,0 +1,8 @@
+[project]
+name = "dwell-distribution"
+version = "0.1.0"
+description = "多种计时记录的原始直方图和中心对比"
+requires-python = ">=3.11,<3.12"
+
+[tool.unittest]
+start-directory = "tests"
