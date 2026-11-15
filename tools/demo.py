@@ -9,7 +9,7 @@ from dwell_distribution.client import ProductClient
 from dwell_distribution.data import load_bundle
 from dwell_distribution.service import running_service
 from dwell_distribution.store import ArtifactStore
-from dwell_distribution.workflow import publish_overview
+from dwell_distribution.workflow import publish_latent_analysis, publish_overview
 
 
 def main():
@@ -23,7 +23,11 @@ def main():
                 published = publish_overview(client, "2026-01-01", "overview-demo")
                 restored = client.artifact(published["artifact_id"])
                 assert restored == published["artifact"]
+                latent = publish_latent_analysis(client, "2026-01-01", "latent-demo")
+                restored_latent = client.artifact(latent["artifact_id"])
+                assert restored_latent == latent["artifact"]
                 print(json.dumps({"产品": bundle["product"], "发布编号": published["artifact_id"], "原始资料概览": restored["result"]}, ensure_ascii=False, indent=2))
+                print(json.dumps({"发布编号": latent["artifact_id"], "潜在时长分析": restored_latent["result"]}, ensure_ascii=False, indent=2))
         finally:
             store.close()
 
